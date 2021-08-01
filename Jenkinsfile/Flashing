@@ -1,0 +1,44 @@
+pipeline{
+    
+    parameters {
+        string(name: 'Image', defaultValue: 'mgu22-MGU22_21w04.5-2-27-mgu22-full-pdx', description: 'Image name')
+        choice(name: 'Test_Rack', choices: ['TestRack1-CT-IDC-B2-High', 'TestRack2-CT-MGU-B2', 'for the future'], description: 'Choose the test Rack')
+        file(name:'tal.xml', description:'Tal file')
+    }
+
+    agent{
+        node{
+                label "${params.Test_Rack}"  
+        }
+    }
+    stages{
+        stage("Flashing target"){
+            
+            steps{
+                script{
+                    if("${params.Test_Rack}"=="TestRack1-CT-IDC-B2-High"){
+                        env.vin="169.254.125.54"
+                    } 
+                    else if("${params.Test_Rack}"=="TestRack2-CT-MGU-B2"){
+                        env.vin="169.254.94.199"
+                    }
+
+                }     
+
+                bat(
+                    script:
+                        """
+                            echo "Flashing"         
+                            tar xvzf C:/Users/MGU22/Desktop/images/${params.Image}.tar.gz -C C:/Users/MGU22/Desktop/images
+                            python   Libraries/E-sys/server.py --opt 1   
+                            python   Libraries/E-sys/E_sys.py -img ${params.Image} -vin ${env.vin}
+                            python   Libraries/E-sys/server.py --opt 2   
+                        """
+                )
+                
+            }
+        
+        }
+    }
+
+}

@@ -1,0 +1,6 @@
+	DIAG [CBS DiagJob 0x4201]		      	SEND [22,42,01]		EXPECT [62,42,01,*] 	              TIMEOUT [5000]
+
+	
+	
+
+	

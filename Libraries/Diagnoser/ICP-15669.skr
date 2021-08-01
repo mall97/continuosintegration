@@ -1,0 +1,1 @@
+DIAG [STATUS_SENSOREN_IDENT_LESEN_HUD 0x4604]          SEND [22,46,04]                        	EXPECT [62,46,04,*] 				  TIMEOUT [5000]

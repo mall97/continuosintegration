@@ -1,0 +1,75 @@
+pipeline{
+    
+    parameters {
+        string(name: 'USER', defaultValue: 'Mr Jenkins', description: 'User name on B2B')
+        password(name: 'PASSWORD' , description: 'Enter a password')
+        choice(name: 'Test_Rack', choices: ['TestRack1-CT-IDC-B2-High', 'TestRack2-CT-MGU-B2', 'example2'], description: 'Choose the test Rack')
+        string(name: 'PR', defaultValue: '1234', description: 'Pull request to be tested')
+    }
+
+    agent{
+        node{
+                label "${params.Test_Rack}"  
+        }
+    }
+
+    environment {
+        ROBOT_LOGS_DIRECTORY= "C:/Users/MGU22/Desktop/jenkins/workspace/Regression_DIAG"
+        ROBOT_OUTPUT_FILE="C:/Users/MGU22/Desktop/jenkins/workspace/Regression_DIAG/output.xml"
+        RFW_2_XRAY_SCRIPT="C:/Users/MGU22/Desktop/testexecution2xray/rfw2xray_results.py" 
+        RFW_2_XRAY_JIRA="https://asc.bmwgroup.net/mgujira/"
+        DATE=java.time.LocalDate.now()
+        DATETIME=java.time.LocalTime.now()
+    }
+
+    stages{
+        stage("Run Automated Tests"){
+            
+            steps{
+                script{
+                    if("${params.Test_Rack}"=="TestRack1-CT-IDC-B2-High"){
+                        env.HV="IDC"
+                        env.tc="OSIS-8884_IDC_related_diagnostic_service_jobs"
+                    } 
+                    else if("${params.Test_Rack}"=="TestRack2-CT-MGU-B2"){
+                        env.HV="MGU"
+                        env.tc="OSIS-8886_MGU_related_diagnostic_service_job"
+                    }
+
+                }                       
+
+                bat(
+                    script:
+                        """
+                            echo "DIAG PR regression"         
+                            python -m robot -t ${env.tc}  --variable target:${env.HV} C:/Users/MGU22/Desktop/jenkins/workspace/Regression_DIAG/Tests/Regression/DIAG_PR_regression.robot      
+                        """
+                )
+                
+            }
+            post{
+                always{
+                    step([
+                        $class : 'RobotPublisher',
+                        outputPath : "${env.ROBOT_LOGS_DIRECTORY}",
+                        outputFileName : "output.xml",
+                        disableArchiveOutput : false,
+                        reportFileName: "report.html",
+                        logFileName: "log.html"
+                    ])
+                    wrap([$class: 'MaskPasswordsBuildWrapper', varPasswordPairs: [[password: "${params.PASSWORD}", var: 'SECRET']]]) {
+                        bat(
+                            script:
+                                """
+                                    python  Libraries/Restart_Rack/restart.py   COM15  
+                                    py -2     ${env.RFW_2_XRAY_SCRIPT}        ${env.ROBOT_OUTPUT_FILE}        ${env.RFW_2_XRAY_JIRA}      ${params.USER}      -pw     ${params.PASSWORD}      -s      \"Regression tests DIAG, ${params.PR}, ${DATE}, ${DATETIME}\"     -pk     OSIS-13719       -l   "Conti_Resp"       -db        
+                                """ 
+                        )
+                    }
+                }     
+            }
+        
+        }
+    }
+
+}

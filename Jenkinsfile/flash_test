@@ -1,0 +1,40 @@
+pipeline{
+    
+    parameters {
+        string(name: 'USER', defaultValue: 'Mr Jenkins', description: 'User name on B2B')
+        password(name: 'PASSWORD' , description: 'Enter a password')
+        choice(name: 'Test_Rack', choices: ['TestRack1-CT-IDC-B2-High', 'TestRack2-CT-MGU-B2', 'RSE'], description: 'Choose the test Rack')
+        choice(name: 'Regression', choices: ['Regression_COM', 'Regression_DIAG', 'Regression_OSIS'], description: 'Choose the regression to execute')
+        string(name: 'PR', defaultValue: '1234', description: 'Pull request to be tested')
+        string(name: 'Image', defaultValue: 'mgu22-MGU22_21w04.5-2-27-mgu22-full-pdx', description: 'Image name')
+    }
+
+    agent{
+        node{
+                label 'master'  
+        }
+    }
+
+
+
+    stages 
+    {
+        stage ('Flashing') {
+            steps {
+                build job: 'Flashing_E-sys', parameters: [
+                string(name: 'Image', value: "${params.Image}"),
+                string(name: 'Test_Rack', value: "${params.Test_Rack}")
+                ]
+            }
+        }
+        stage('Testing') {
+            steps {
+                sleep 20
+                build job: "${params.Regression}", parameters: [
+                string(name: 'Test_Rack', value: "${params.Test_Rack}")
+                ]
+            }
+        }
+    }
+
+}

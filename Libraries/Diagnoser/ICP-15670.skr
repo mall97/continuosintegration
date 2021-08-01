@@ -1,0 +1,2 @@
+DIAG [ START_TestVerbauHud 0xA31C part1]          SEND [31,01,A3,1C]                        	EXPECT [71,01,A3,1C,*] 				  TIMEOUT [5000]
+DIAG [ START_TestVerbauHud 0xA31C part2]          SEND [31,03,A3,1C]                        	EXPECT [71,03,A3,1C,*] 				  TIMEOUT [5000]

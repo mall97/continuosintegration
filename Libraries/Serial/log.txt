@@ -1,0 +1,6 @@
+[2020-10-30 15:12:32,263] [INFO] [serial_api::__init__] Target connection setup
+[2020-10-30 15:12:32,281] [INFO] [serial_api::serial_port_init] Connected to port COM57
+[2020-10-30 15:12:34,483] [INFO] [serial_api::serial_logging] Logged in
+[2020-10-30 15:12:34,683] [INFO] [serial_api::serial_logging] Configuring target serial port interface
+[2020-10-30 15:12:34,885] [INFO] [serial_api::serial_logging] Serial connection initialized
+[2020-10-30 15:12:35,886] [INFO] [serial_api::send_to_serial] Sent to serial: /usr/bin/inc-demo_io_environment_SomeIp -t 2

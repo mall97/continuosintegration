@@ -1,0 +1,1 @@
+DIAG [ Did_HudSwVersionLesen 0xDA44]          SEND [22,DA,44]                        	EXPECT [62,DA,44,*] 				  TIMEOUT [5000]

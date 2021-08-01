@@ -1,0 +1,1 @@
+DIAG [Diag Tests]          SEND [2E,D5,C2,00]                        	EXPECT [6E,D5,C2] 				  TIMEOUT [5000]

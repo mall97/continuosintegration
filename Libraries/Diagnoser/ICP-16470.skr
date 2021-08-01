@@ -1,0 +1,1 @@
+DIAG [Read Climate Timer implementation]          SEND [22,D1,21]                        	EXPECT [62,D1,21,*] 				  TIMEOUT [5000]

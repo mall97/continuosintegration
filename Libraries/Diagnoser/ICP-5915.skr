@@ -1,0 +1,1 @@
+DIAG [STEUERN_DISPLAY_TESTBILD_ERWEITERT]          SEND [2E,D5,C1,02]                        	EXPECT [6E,D5,C1] 				  TIMEOUT [5000]

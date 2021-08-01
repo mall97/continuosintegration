@@ -1,0 +1,12 @@
+	DIAG [CBS DiagJob 0x1006]		      	SEND [31,01,10,06,02]		EXPECT [71,01,10,06,*] 	              TIMEOUT [5000]
+	
+	DIAG [CBS DiagJob 0x1006]		      	SEND [31,01,10,06,03]		EXPECT [71,01,10,06,*] 	              TIMEOUT [5000]
+		
+	DIAG [CBS DiagJob 0x1006]		      	SEND [31,01,10,06,04]		EXPECT [71,01,10,06,*] 	              TIMEOUT [5000]
+			
+	DIAG [CBS DiagJob 0x1006]		      	SEND [31,01,10,06,05]		EXPECT [71,01,10,06,*] 	              TIMEOUT [5000]
+
+	
+	
+
+	

@@ -1,0 +1,1 @@
+DIAG [Read real time clock status]          SEND [22,40,19]                        	EXPECT [62,40,19,*] 				  TIMEOUT [5000]

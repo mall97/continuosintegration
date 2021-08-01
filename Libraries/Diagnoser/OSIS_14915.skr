@@ -1,0 +1,1 @@
+DIAG [DFE_Display - APIX3 Register_DISPLAY_DFE_GENERISCH 0xF042-Sub ID -I]          SEND [31,01,F0,42,00,02,22,05]                        	EXPECT [71,01,F0,42,00,06,62,05,*] 				  TIMEOUT [5000]

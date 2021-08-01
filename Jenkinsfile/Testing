@@ -1,0 +1,49 @@
+pipeline{
+    
+    parameters {
+        choice(name: 'Test_Rack', choices: ['TestRack1-CT-IDC-B2-High', 'TestRack2-CT-MGU-B2', 'example2'], description: 'Choose the test Rack')
+    }
+
+    agent{
+        node{
+                label "${params.Test_Rack}"  
+        }
+    }
+
+
+
+    stages{
+        stage("Run Automated Tests"){
+            
+            steps{ 
+                script{
+                    if("${params.Test_Rack}"=="TestRack1-CT-IDC-B2-High"){
+                        env.HV="IDC"
+                    } 
+                    else if("${params.Test_Rack}"=="TestRack2-CT-MGU-B2"){
+                        env.HV="MGU"
+                    }
+                } 
+
+
+                bat(
+                    script:
+                        """
+                            Tests/EPIC_tests_plan/ICP-14650/ICP-16470.bat
+                        """
+                ) 
+
+                bat(
+                    script:
+                        """
+                            echo "Testing"
+                            python -m robot --variable target:${env.HV} Tests/Portfolio/TestPlan.robot               
+                        """
+
+                )
+            }      
+        
+        }
+    }
+
+}

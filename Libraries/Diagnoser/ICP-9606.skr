@@ -1,0 +1,1 @@
+DIAG [CBS DiagJob 0x1004]          SEND [22,10,04]                        	EXPECT [62,10,04,*] 				  TIMEOUT [5000]

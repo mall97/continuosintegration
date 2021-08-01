@@ -1,0 +1,29 @@
+	DIAG [CID_DIAG_JOBS - Detail_Information_Extended]		SEND [22,40,11]		    						EXPECT [62,40,11,*] 	          TIMEOUT [10000]
+	DIAG [CID_DIAG_JOBS - STEUERN_Display_OFF]		      	SEND [2E,D5,C9,00]								EXPECT [6E,D5,C9] 	              TIMEOUT [10000]
+	DIAG [CID_DIAG_JOBS - STEUERN_Display_ON]  		      	SEND [2E,D5,C2,00]								EXPECT [6E,D5,C2]	              TIMEOUT [10000]
+	DIAG [CID_DIAG_JOBS - TestbildDisplay_WriteData]		SEND [2E,D5,C1,02] 								EXPECT [6E,D5,C1] 	              TIMEOUT [10000]
+	DIAG [CID_DIAG_JOBS - TestVerbauDisplay_Start]			SEND [31,01,AC,00] 								EXPECT [71,01,AC,00,*]            TIMEOUT [10000]
+	DIAG [CID_DIAG_JOBS - TestVerbauDisplay_RequestResult]	SEND [31,03,AC,00] 								EXPECT [71,03,AC,00,*]            TIMEOUT [10000]
+	DIAG [CID_DIAG_JOBS - Display_Sw_Version_ReadData]	    SEND [22,40,0E] 								EXPECT [62,40,0E,*]               TIMEOUT [10000]
+	//DIAG [CID_DIAG_JOBS - DisplayPrbs_Start]	    		SEND [31,01,A0,DF,01,01,01,01,01] 				EXPECT [71,01,A0,DF]              TIMEOUT [10000]
+	//DIAG [CID_DIAG_JOBS - DisplayPrbs_RequestResult]	    SEND [31,03,A0,DF] 								EXPECT [71,03,A0,DF,*]            TIMEOUT [10000]
+	DIAG [CID_DIAG_JOBS - Sensoren_Ident_Lesen]				SEND [22,46,01]		    						EXPECT [62,46,01,*] 	          TIMEOUT [10000]
+	//Display Generisch
+    DIAG [CID_DIAG_JOBS - Steuern_Cid_Codierdaten]          SEND [31,01,F0,17,00,22,2E,04,01,02,03,04,05,06,07,08,09,0A,0B,0C,0D,0E,0F,11,12,13,14,15,16,17,18,19,1A,1B,1C,1D,1E,1F,21,22]       EXPECT [71,01,F0,17,*]      TIMEOUT [10000]
+    DIAG [CID_DIAG_JOBS - Status_Cid_Codierdaten]           SEND [31,01,F0,17,00,02,22,0B]                  EXPECT [71,01,F0,17,*]            TIMEOUT [10000]
+    DIAG [CID_DIAG_JOBS - Cid_Photosensor]                  SEND [31,01,F0,17,00,02,22,01]                  EXPECT [71,01,F0,17,*]            TIMEOUT [10000]
+    DIAG [CID_DIAG_JOBS - Cid_Temp_Backlight]               SEND [31,01,F0,17,00,02,22,02]                  EXPECT [71,01,F0,17,*]            TIMEOUT [10000]
+    DIAG [CID_DIAG_JOBS - Cid_Helligkeit_Sollwert]          SEND [31,01,F0,17,00,02,22,03]                  EXPECT [71,01,F0,17,*]            TIMEOUT [10000]
+    DIAG [CID_DIAG_JOBS - Cid_Helligkeit_Istwert]           SEND [31,01,F0,17,00,02,22,04]                  EXPECT [71,01,F0,17,*]            TIMEOUT [10000]
+    DIAG [CID_DIAG_JOBS - Cid_Eingagswerte_Lesen]           SEND [31,01,F0,17,00,02,22,05]                  EXPECT [71,01,F0,17,*]            TIMEOUT [10000]
+    DIAG [CID_DIAG_JOBS - Status_Cid_Detail_Information]    SEND [31,01,F0,17,00,02,22,06]                  EXPECT [71,01,F0,17,*]            TIMEOUT [10000]
+    DIAG [CID_DIAG_JOBS - Status_Sensor_Werte]              SEND [31,01,F0,17,00,02,22,07]                  EXPECT [71,01,F0,17,*]            TIMEOUT [10000]
+    DIAG [CID_DIAG_JOBS - Steuern_RGB_Screen]               SEND [31,01,F0,17,00,07,2E,02,01,AA,BB,CC,00]   EXPECT [71,01,F0,17,*]            TIMEOUT [10000]
+    DIAG [CID_DIAG_JOBS - Internal_States]                  SEND [31,01,F0,17,00,02,22,0A]                  EXPECT [71,01,F0,17,*]            TIMEOUT [10000]
+    DIAG [CID_DIAG_JOBS - Steuern_Backlight]                SEND [31,01,F0,17,00,03,2E,01,01]               EXPECT [71,01,F0,17,*]            TIMEOUT [10000]
+
+    DIAG [RTC_DIAG_JOBS - SYSTEMZEIT_SUPREME]               SEND [22,17,69]                     			EXPECT [62,17,69,*]               TIMEOUT [10000]
+
+
+
+			

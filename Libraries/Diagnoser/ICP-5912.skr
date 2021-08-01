@@ -1,0 +1,1 @@
+DIAG [ STEUERN_DISPLAY_OFF]          SEND [2E,D5,C9,00]                        	EXPECT [6E,D5,C9] 				  TIMEOUT [5000]

@@ -1,0 +1,12 @@
+{
+    "log_to_api": {
+        "host"       : "127.0.0.1",
+        "port"       : 21000,
+        "log_folder" : "./logs",
+        "log_file"   : "all_logs.log"
+    },
+    "log_to_shell": {
+        "host"       : "127.0.0.1",
+        "port"       : 22000
+    }
+}

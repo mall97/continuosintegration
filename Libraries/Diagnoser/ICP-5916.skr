@@ -1,0 +1,1 @@
+DIAG [STATUS_DISPLAY_SW_VERSION]          SEND [22,40,0E]                        	EXPECT [62,40,0E,*] 				  TIMEOUT [5000]

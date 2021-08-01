@@ -1,0 +1,81 @@
+pipeline{
+    
+    parameters {
+        string(name: 'USER', defaultValue: 'Mr Jenkins', description: 'User name on B2B')
+        password(name: 'PASSWORD' , description: 'Enter a password')
+        choice(name: 'Test_Rack', choices: ['TestRack1-CT-IDC-B2-High', 'TestRack2-CT-MGU-B2', 'example2'], description: 'Choose the test Rack')
+        string(name: 'Test_Plan', description: 'Test plan to kink the test execution')
+    }
+
+    agent{
+        node{
+                label "${params.Test_Rack}"  
+        }
+    }
+
+    environment {
+        ROBOT_LOGS_DIRECTORY= "C:/Users/MGU22/Desktop/jenkins/workspace/Testing_Portfolio"
+        ROBOT_OUTPUT_FILE="C:/Users/MGU22/Desktop/jenkins/workspace/Testing_Portfolio/output.xml"
+        RFW_2_XRAY_SCRIPT="C:/Users/MGU22/Desktop/testexecution2xray/rfw2xray_results.py" 
+        RFW_2_XRAY_JIRA="https://asc.bmwgroup.net/mgujira/"
+        DATE=java.time.LocalDate.now()
+        DATETIME=java.time.LocalTime.now()
+    }
+
+    stages{
+        stage("Run Automated Tests"){
+            
+            steps{    
+                script{
+                    if("${params.Test_Rack}"=="TestRack1-CT-IDC-B2-High"){
+                        env.HV="IDC"
+                    } 
+                    else if("${params.Test_Rack}"=="TestRack2-CT-MGU-B2"){
+                        env.HV="MGU"
+                    }
+
+                }
+
+                bat(
+                    script:
+                        """
+                            Tests/EPIC_tests_plan/OSIS-11136/OSIS-18245.bat       
+                        """
+                )   
+                               
+                bat(
+                    script:
+                        """
+                            echo "Testing Portfolio"         
+                            python -m robot --variable target:${env.HV} C:/Users/MGU22/Desktop/jenkins/workspace/Testing_Portfolio/Tests/Portfolio/TestPlan.robot       
+                        """
+                )
+            }
+            post{
+                always{
+                    step([
+                        $class : 'RobotPublisher',
+                        outputPath : "${env.ROBOT_LOGS_DIRECTORY}",
+                        outputFileName : "output.xml",
+                        disableArchiveOutput : false,
+                        reportFileName: "report.html",
+                        logFileName: "log.html"
+                    ])
+                    wrap([$class: 'MaskPasswordsBuildWrapper', varPasswordPairs: [[password: "${params.PASSWORD}", var: 'SECRET']]]) {
+                        bat(
+                            script:
+                                """
+                                    python  Libraries/Restart_Rack/restart.py   COM15 
+                                    py -2     ${env.RFW_2_XRAY_SCRIPT}        ${env.ROBOT_OUTPUT_FILE}        ${env.RFW_2_XRAY_JIRA}      ${params.USER}      -pw     ${params.PASSWORD}      -s      \"ioc-abstraction: cross-if-sysinfra 0.13 IOLifecycle new features implementation, ${DATE}, ${DATETIME}\"     -pk     ${params.Test_Plan}       -l   "Conti_Resp"       -db
+                                    py -3.7  Scripts/Python/jira_publisher.py    --user  ${params.USER}      --passw     ${params.PASSWORD}      --path      C:/Users/MGU22/Desktop/jenkins/workspace/Testing_Portfolio/log.html           
+                                """ 
+                        )
+                    }
+                }     
+            }
+                
+        
+        }
+    }
+
+}

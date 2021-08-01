@@ -1,0 +1,2 @@
+DIAG [ STEUERN_TEST_VERBAU_DISPLAY 1]          SEND [31,01,AC,00]                        	EXPECT [71,01,AC,00,*] 				  TIMEOUT [5000]
+DIAG [ STEUERN_TEST_VERBAU_DISPLAY 2]          SEND [31,03,AC,00]                        	EXPECT [71,03,AC,00,*] 				  TIMEOUT [5000]

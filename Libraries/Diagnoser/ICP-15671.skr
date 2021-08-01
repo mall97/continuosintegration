@@ -1,0 +1,1 @@
+DIAG [ STATUS_HUD_BILDPOSITION_SCHRITTE 0xDA0A]          SEND [22,DA,0A]                        	EXPECT [62,DA,0A,*] 				  TIMEOUT [5000]

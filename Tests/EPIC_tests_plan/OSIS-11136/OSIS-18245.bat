@@ -1,0 +1,2 @@
+python Scripts/Python/create_regression_file.py --file OSIS-17888 --code OSIS-17888 --flag 1 --feature iolifecycle
+python Scripts/Python/create_regression_file.py --file OSIS-17891 --code OSIS-17891 --flag 1 --feature iolifecycle
